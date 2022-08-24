@@ -95,7 +95,8 @@ def BuildUI():
     tmpRowWidth = winWidth
     cmds.rowLayout(nc = 1, cw1 = tmpRowWidth)
 
-    cmds.button('replace', l = 'Replace', w = winWidth, h = 30, c='repButt()')
+    cmds.button('replace', l = 'Replace', w = winWidth, h = 30, c='from WB_Utils.utils import rename;'
+                                                                        'rename.do_replace()')
 
     cmds.setParent('..')
 
@@ -152,3 +153,22 @@ def do_rename():
     else:
 
         LOG.error('Nothing in selection.')
+
+
+def do_replace():
+
+    oldName = cmds.textField('oldName', q=True, tx=True)
+    newName = cmds.textField('newName', q=True, tx=True)
+
+
+    sel = cmds.ls(sl=True)
+
+
+
+    for i in sel:
+
+        if oldName in i:
+            cmds.rename(i, i.replace(oldName, newName))
+
+        else:
+            LOG.info('Selected object does not contain replacement name.')
