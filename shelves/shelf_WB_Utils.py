@@ -1,11 +1,11 @@
 """
-    Creates rigging_toolkit Maya shelf
+    Creates WB_Utils Maya shelf
 
     To use, run these Python commands in Maya:
 
-        from rigging_toolkit.shelves import shelf_rigging_toolkit
-        reload(shelf_rigging_toolkit)
-        shelf_rigging_toolkit.load(name="Rigging_Toolkit")
+        from WB_Utils.shelves import shelf_WB_Utils
+        reload(shelf_WB_Utils)
+        shelf_WB_Utils.load(name="WB_Utils")
 
 """
 
@@ -23,19 +23,21 @@ import subprocess
 
 
 # Inherit shelf base class module whose functions we "override" to build our user_toolkit shelf
-from rigging_toolkit.shelves import shelf_base
+from WB_Utils.shelves import shelf_base
 reload(shelf_base)
 
-from rigging_toolkit.utils import transforms
+from WB_Utils.utils import transforms
 reload(transforms)
+
+from WB_Utils.utils import rename
 
 # Import maya modules
 from maya import cmds
 
 
 # GLOBAL script variables referred to throughout this script
-ICON_DIR = os.path.join(os.path.dirname(__file__), 'shelf_rigging_toolkit_icons')
-SCRIPTS_DIR = os.path.join(os.path.dirname(__file__), 'shelf_rigging_toolkit_scripts')
+ICON_DIR = os.path.join(os.path.dirname(__file__), 'shelf_WB_Utils_icons')
+SCRIPTS_DIR = os.path.join(os.path.dirname(__file__), 'shelf_WB_Utils_scripts')
 PLATFORM = sys.platform
 
 sys.path.append(SCRIPTS_DIR)
@@ -51,16 +53,16 @@ def explore_maya_project():
 def reload_shelf():
     """Reloads shelf"""
     try:
-        from rigging_toolkit.shelves import shelf_base
+        from WB_Utils.shelves import shelf_base
         reload(shelf_base)
 
-        from rigging_toolkit.shelves import shelf_rigging_toolkit
-        reload(shelf_rigging_toolkit)
+        from WB_Utils.shelves import shelf_WB_Utils
+        reload(shelf_WB_Utils)
 
 
-        shelf_rigging_toolkit.load('Rigging_Toolkit')
+        shelf_WB_Utils.load('WB_Utils')
 
-        LOG.info("Successfully reloaded {} shelf".format('Rigging_Toolkit'))
+        LOG.info("Successfully reloaded {} shelf".format('WB_Utils'))
         return True
     except:
         LOG.error("Error reloading shelf")
@@ -71,15 +73,26 @@ class load(shelf_base._shelf):
     def build(self):
 
         # Reload shelf button
-        self.addButton(label="", ann='Reload shelf', icon=ICON_DIR + "/reloadShelf.png", command= "from rigging_toolkit.shelves import shelf_rigging_toolkit; "
-                                                                                "maya.utils.executeDeferred('shelf_rigging_toolkit.reload_shelf()')")
+        self.addButton(label="", ann='Reload shelf', icon=ICON_DIR + "/reloadShelf.png", command= "from WB_Utils.shelves import shelf_WB_Utils; "
+            "maya.utils.executeDeferred('shelf_WB_Utils.reload_shelf()')")
 
+        # Common tools
+
+        # Separator
+        self.addSeparator()
+
+        self.addButton(label="", ann='Opens popup window to rename objects.', icon=ICON_DIR + "/grpOffset.png", command= 'from WB_Utils.utils import rename;'
+                                                                            'reload(rename);'
+                                                                            'rename.BuildUI()')
+
+
+        # Rigging Tools
 
         # Separator
         self.addSeparator()
 
 
         # Group Offset button
-        self.addButton(label="", ann='Add transform offset and group to selected objects', icon=ICON_DIR + "/grpOffset.png", command= 'from rigging_toolkit.utils import transforms;'
+        self.addButton(label="", ann='Add transform offset and group to selected objects', icon=ICON_DIR + "/grpOffset.png", command= 'from WB_Utils.utils import transforms;'
                                                                             'reload(transforms);'
                                                                             'transforms.add_transform()')
