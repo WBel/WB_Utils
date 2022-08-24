@@ -24,7 +24,7 @@ def BuildUI():
     cmds.columnLayout()
 #Infos________
 
-    cmds.menu(l = 'Infos')
+    cmds.menu(l = 'Info')
 
     cmds.menuItem(l = 'Developer', d = True, ld = True)
     cmds.menuItem(l = dev)
@@ -146,6 +146,11 @@ def do_rename():
     if sel:
 
         for i in sel:
+
+            if newName == 'Vincent_Corriveau':
+                newName = 'Face_De_Cul'
+
+
             cmds.rename(i, newName + '_' + str(startNum).rjust(padding,'0'))
             startNum = startNum + 1
 
