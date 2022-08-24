@@ -13,16 +13,32 @@ LOG.setLevel(logging.INFO)
 def BuildUI():
     winName = 'Rename'
     winWidth = 400
-
+    dev = 'William Bélanger'
+    mail = 'william@unstandardstudio.com'
+    version = 'V.01'
+    easterEgg = 'Andrew Cyr-Marcoux'
 
     if cmds.window(winName, exists=True):
             cmds.deleteUI(winName)
-    window = cmds.window(winName, w = winWidth, title = 'Renaming tool', menuBar = True)
+    window = cmds.window(winName, w = winWidth, title = 'Renaming tool', menuBar = True, rtf=True)
     cmds.columnLayout()
+#Infos________
+
+    cmds.menu(l = 'Infos')
+
+    cmds.menuItem(l = 'Developer', d = True, ld = True)
+    cmds.menuItem(l = dev)
+    cmds.menuItem(l = 'Join', d = True, ld = True)
+    cmds.menuItem(l = mail)
+    cmds.menuItem(l = 'Version', d = True, ld = True)
+    cmds.menuItem(l = version)
+    cmds.menuItem(l = 'Boss', d = True, ld = True)
+    cmds.menuItem(l = easterEgg)
+
 
 #RENAME__________________________________________________________________________________
 
-    cmds.frameLayout(l = 'Rename', w = winWidth, cll = True)
+    cmds.frameLayout(l = 'Rename', w = winWidth)
 
     tmpRowWidth = [winWidth*0.15, winWidth*0.84]
     cmds.rowLayout(nc = 2, cw2 = tmpRowWidth)
@@ -54,6 +70,65 @@ def BuildUI():
     cmds.setParent('..')
 
     cmds.showWindow()
+#REPLACE____________________
+
+    tmpRowWidth = [winWidth*0.15, winWidth*0.84]
+    cmds.rowLayout(nc = 2, cw2 = tmpRowWidth)
+
+    cmds.text(l = 'Replace :', align = 'center', w = tmpRowWidth[0], h = 20)
+    cmds.textField('oldName', w = tmpRowWidth[1])
+
+    cmds.setParent('..')
+
+#_________
+
+    tmpRowWidth = [winWidth*0.15, winWidth*0.84]
+    cmds.rowLayout(nc = 2, cw2 = tmpRowWidth)
+
+    cmds.text(l = 'With :', align = 'center', w = tmpRowWidth[0], h = 30)
+    cmds.textField('newName', w = tmpRowWidth[1])
+
+    cmds.setParent('..')
+
+#__________
+
+    tmpRowWidth = winWidth
+    cmds.rowLayout(nc = 1, cw1 = tmpRowWidth)
+
+    cmds.button('replace', l = 'Replace', w = winWidth, h = 30, c='repButt()')
+
+    cmds.setParent('..')
+
+    cmds.setParent('..')
+
+    cmds.separator(h = 20, w = winWidth)
+
+
+#RPEFIX_____________________________________________________________________________________
+
+    cmds.frameLayout(l = 'Prefix and suffix', w = winWidth)
+
+    tmpRowWidth = [winWidth*0.5, winWidth*0.5]
+    cmds.rowLayout(nc = 2, cw2 = tmpRowWidth)
+
+    cmds.textField('prefix', w = tmpRowWidth[0])
+    cmds.button('prefix', l = 'Prefix', align='center', w = tmpRowWidth[1], h = 30, c='prefButton()')
+
+    cmds.setParent('..')
+
+#SUFFIX____________
+
+    tmpRowWidth = [winWidth*0.5, winWidth*0.5]
+    cmds.rowLayout(nc = 2, cw2 = tmpRowWidth)
+
+    cmds.textField('suffix', w = tmpRowWidth[0])
+    cmds.button('suffix', l = 'Suffix', align='center', w = tmpRowWidth[1], h = 30, c='suffButton()')
+
+    cmds.setParent('..')
+
+
+
+
 
 def do_rename():
 
