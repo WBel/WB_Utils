@@ -77,5 +77,3 @@ def do_rename():
     else:
 
         LOG.error('Nothing in selection.')
-
-BuildUI()

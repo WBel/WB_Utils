@@ -74,7 +74,7 @@ class load(shelf_base._shelf):
 
         # Reload shelf button
         self.addButton(label="", ann='Reload shelf', icon=ICON_DIR + "/reloadShelf.png", command= "from WB_Utils.shelves import shelf_WB_Utils; "
-            "maya.utils.executeDeferred('shelf_WB_Utils.reload_shelf()')")
+                                                                        "maya.utils.executeDeferred('shelf_WB_Utils.reload_shelf()')")
 
         # Common tools
 
