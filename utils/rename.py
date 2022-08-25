@@ -1,6 +1,7 @@
 from maya import cmds
 
 import logging
+import re
 
 
 logging.basicConfig()
@@ -168,12 +169,12 @@ def do_replace():
     newName = cmds.textField('newName', q=True, tx=True)
 
 
-    sel = cmds.ls(sl=True)
+    sel = cmds.ls(sl=True, fl=True)
 
 
 
     for i in sel:
-
+        i = i.split("|")[-1]
         if oldName in i:
             cmds.rename(i, i.replace(oldName, newName))
 
