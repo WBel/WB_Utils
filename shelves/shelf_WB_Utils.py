@@ -30,6 +30,10 @@ from WB_Utils.utils import transforms
 reload(transforms)
 
 from WB_Utils.utils import rename
+reload(rename)
+
+from WB_Utils.utils import locator
+reload(locator)
 
 # Import maya modules
 from maya import cmds
@@ -81,7 +85,7 @@ class load(shelf_base._shelf):
         # Separator
         self.addSeparator()
 
-        self.addButton(label="", ann='Opens popup window to rename objects.', icon=ICON_DIR + "/grpOffset.png", command= 'from WB_Utils.utils import rename;'
+        self.addButton(label="", ann='Opens popup window to rename objects.', icon=ICON_DIR + "/rename.png", command= 'from WB_Utils.utils import rename;'
                                                                             'reload(rename);'
                                                                             'rename.BuildUI()')
 
@@ -93,6 +97,20 @@ class load(shelf_base._shelf):
 
 
         # Group Offset button
-        self.addButton(label="", ann='Add transform offset and group to selected objects', icon=ICON_DIR + "/grpOffset.png", command= 'from WB_Utils.utils import transforms;'
+        self.addButton(label="", ann='Add transform offset and group to selected objects.', icon=ICON_DIR + "/grpOffset.png", command= 'from WB_Utils.utils import transforms;'
                                                                             'reload(transforms);'
                                                                             'transforms.add_transform()')
+
+        # Locator button
+        self.addButton(label="", ann='Create locators based on selection.', icon=ICON_DIR + "/locator.png")
+        locator_tool_menu = cmds.popupMenu(b=1)
+
+        self.addMenuItemDivider(locator_tool_menu, divider=True, dividerLabel='CREATE LOCATORS...')
+
+        self.addMenuItem(locator_tool_menu, 'Creates locator at selected position', command= 'from WB_Utils.utils import locator;'
+                                                                            'reload(locator);'
+                                                                            'locator.loc_atSelectedPos()')
+
+        self.addMenuItem(locator_tool_menu, 'Creates locator at selected position/rotation', command= 'from WB_Utils.utils import locator;'
+                                                                            'reload(locator);'
+                                                                            'locator.loc_atSelectedPosRot()')

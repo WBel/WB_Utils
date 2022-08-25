@@ -105,7 +105,7 @@ def BuildUI():
     cmds.separator(h = 20, w = winWidth)
 
 
-#RPEFIX_____________________________________________________________________________________
+#PREFIX_____________________________________________________________________________________
 
     cmds.frameLayout(l = 'Prefix and suffix', w = winWidth)
 
@@ -113,7 +113,8 @@ def BuildUI():
     cmds.rowLayout(nc = 2, cw2 = tmpRowWidth)
 
     cmds.textField('prefix', w = tmpRowWidth[0])
-    cmds.button('prefix', l = 'Prefix', align='center', w = tmpRowWidth[1], h = 30, c='prefButton()')
+    cmds.button('prefix', l = 'Prefix', align='center', w = tmpRowWidth[1], h = 30, c='from WB_Utils.utils import rename;'
+                                                                        'rename.do_addPrefix()')
 
     cmds.setParent('..')
 
@@ -123,7 +124,8 @@ def BuildUI():
     cmds.rowLayout(nc = 2, cw2 = tmpRowWidth)
 
     cmds.textField('suffix', w = tmpRowWidth[0])
-    cmds.button('suffix', l = 'Suffix', align='center', w = tmpRowWidth[1], h = 30, c='suffButton()')
+    cmds.button('suffix', l = 'Suffix', align='center', w = tmpRowWidth[1], h = 30, c='from WB_Utils.utils import rename;'
+                                                                        'rename.do_addSuffix()')
 
     cmds.setParent('..')
 
@@ -177,3 +179,32 @@ def do_replace():
 
         else:
             LOG.info('Selected object does not contain replacement name.')
+
+
+def do_addPrefix():
+
+    prefix = cmds.textField('prefix', q=True, tx=True)
+
+    sel = cmds.ls(sl=True)
+
+    for i in sel:
+
+        if prefix:
+            cmds.rename(i + prefix)
+
+        else:
+            LOG.error('No prefix added.')
+
+def do_addSuffix():
+
+    suffix = cmds.textField('suffix', q=True, tx=True)
+
+    sel = cmds.ls(sl=True)
+
+    for i in sel:
+
+        if suffix:
+            cmds.rename(suffix + i)
+
+        else:
+            LOG.error('No suffix added.')
