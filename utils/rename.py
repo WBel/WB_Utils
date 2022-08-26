@@ -2,7 +2,7 @@ from maya import cmds
 
 import logging
 import re
-
+import pymel.core as pm
 
 logging.basicConfig()
 LOG = logging.getLogger(__name__)
@@ -169,14 +169,14 @@ def do_replace():
     newName = cmds.textField('newName', q=True, tx=True)
 
 
-    sel = cmds.ls(sl=True, fl=True)
+    sel = pm.ls(sl=True)
 
 
 
     for i in sel:
-        i = i.split("|")[-1]
-        if oldName in i:
-            cmds.rename(i, i.replace(oldName, newName))
+
+        if oldName in i.nodeName():
+            i.rename(i.nodeName().replace(oldName, newName))
 
         else:
             LOG.info('Selected object does not contain replacement name.')
