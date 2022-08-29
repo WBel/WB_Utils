@@ -35,6 +35,12 @@ reload(rename)
 from WB_Utils.utils import locator
 reload(locator)
 
+from WB_Utils.utils import joints
+reload(joints)
+
+from WB_Utils.utils import generalTools
+reload(generalTools)
+
 # Import maya modules
 from maya import cmds
 
@@ -85,6 +91,18 @@ class load(shelf_base._shelf):
         # Separator
         self.addSeparator()
 
+        self.addButton(label="", ann='General tools.', icon=ICON_DIR + "/rename.png")
+        general_tools_menu = cmds.popupMenu(b=1)
+
+        self.addMenuItemDivider(general_tools_menu, divider=True, dividerLabel='CHANGE UI COLOR...')
+
+        self.addMenuItem(general_tools_menu, 'Select UI color', command= 'from WB_Utils.utils import generalTools;'
+                                                                            'reload(generalTools);'
+                                                                            'generalTools.buildColorUI()')
+
+
+
+        # Renaming tool
         self.addButton(label="", ann='Opens popup window to rename objects.', icon=ICON_DIR + "/rename.png", command= 'from WB_Utils.utils import rename;'
                                                                             'reload(rename);'
                                                                             'rename.BuildUI()')
@@ -114,3 +132,8 @@ class load(shelf_base._shelf):
         self.addMenuItem(locator_tool_menu, 'Creates locator at selected position/rotation', command= 'from WB_Utils.utils import locator;'
                                                                             'reload(locator);'
                                                                             'locator.loc_atSelectedPosRot()')
+
+        # Mirror joints button
+        self.addButton(label="", ann='Opens popup window to mirror joints.', icon=ICON_DIR + "/grpOffset.png", command= 'from WB_Utils.utils import joints;'
+                                                                            'reload(joints);'
+                                                                            'joints.BuildUI()')
