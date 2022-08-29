@@ -4,6 +4,8 @@ https://bindpose.com/scripting-custom-shelf-in-maya-python/
 """
 
 from maya import cmds
+import os
+
 
 def _null(*args):
     pass
@@ -16,6 +18,17 @@ class _ui():
 
         self.name = name
         self.width = winWidthHeight[0]
+        self.color = colorUI = []
+        with open(os.path.join(os.path.dirname(__file__), "colors.dat"), 'r') as f:
+            for i in f:
+
+                x = float(i)
+
+
+                colorUI.append(x)
+
+            f.close()
+
 
         self._deleteUI()
 
@@ -36,6 +49,6 @@ class _ui():
         elements. Otherwise, nothing is added to the shelf."""
         pass
 
-    def addButton(self, name, label, align, bgc, height, command):
-        cmds.button(name, l = label, align = align, bgc = bgc, w = self.width, h = height, command = command)
+    def addButton(self, name, label, align, height, command):
+        cmds.button(name, l = label, align = align, bgc = self.color, w = self.width, h = height, command = command)
         cmds.setParent('..')
