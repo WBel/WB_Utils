@@ -33,7 +33,7 @@ class _ui():
         self._deleteUI()
 
         self.window = cmds.window(self.name, title = title, wh = winWidthHeight, s = s)
-        cmds.columnLayout(p=self.window)
+        cmds.formLayout(nd=100)
 
         cmds.showWindow(self.window)
         self.build()
@@ -49,6 +49,6 @@ class _ui():
         elements. Otherwise, nothing is added to the shelf."""
         pass
 
-    def addButton(self, name, label, align, height, command):
-        cmds.button(name, l = label, align = align, bgc = self.color, w = self.width, h = height, command = command)
-        cmds.setParent('..')
+
+    def addButton(self, name, label, align, height, command, buttonName):
+        buttonName = cmds.button(name, l = label, align = align, bgc = self.color, w = self.width, h = height, command = command)

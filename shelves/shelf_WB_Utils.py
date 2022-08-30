@@ -38,8 +38,8 @@ reload(locator)
 from WB_Utils.utils import joints
 reload(joints)
 
-from WB_Utils.utils import generalTools
-reload(generalTools)
+from WB_Utils.utils import settings
+reload(settings)
 
 # Import maya modules
 from maya import cmds
@@ -83,22 +83,20 @@ class load(shelf_base._shelf):
     def build(self):
 
         # Reload shelf button
-        self.addButton(label="", ann='Reload shelf', icon=ICON_DIR + "/reloadShelf.png", command= "from WB_Utils.shelves import shelf_WB_Utils; "
-                                                                        "maya.utils.executeDeferred('shelf_WB_Utils.reload_shelf()')")
+        self.addButton(label="", ann='Reload shelf', icon=ICON_DIR + "/reloadShelf.png", command= "from WB_Utils.shelves import shelf_WB_Utils; ")
+
+
+        # Settings
+        self.addButton(label="", ann='General tools.', icon=ICON_DIR + "/rename.png")
 
         # Common tools
 
         # Separator
         self.addSeparator()
 
-        self.addButton(label="", ann='General tools.', icon=ICON_DIR + "/rename.png")
-        general_tools_menu = cmds.popupMenu(b=1)
 
-        self.addMenuItemDivider(general_tools_menu, divider=True, dividerLabel='CHANGE UI COLOR...')
 
-        self.addMenuItem(general_tools_menu, 'Select UI color', command= 'from WB_Utils.utils import generalTools;'
-                                                                            'reload(generalTools);'
-                                                                            'generalTools.buildColorUI()')
+
 
 
 
@@ -134,6 +132,6 @@ class load(shelf_base._shelf):
                                                                             'locator.loc_atSelectedPosRot()')
 
         # Mirror joints button
-        self.addButton(label="", ann='Opens popup window to mirror joints.', icon=ICON_DIR + "/grpOffset.png", command= 'from WB_Utils.utils import joints;'
+        self.addButton(label="", ann='Opens popup window to mirror joints.', icon=ICON_DIR + "/mirrorJoints.png", command= 'from WB_Utils.utils import joints;'
                                                                             'reload(joints);'
                                                                             'joints.BuildUI()')

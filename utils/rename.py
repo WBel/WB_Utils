@@ -20,17 +20,6 @@ def BuildUI():
     mail = 'william@unstandardstudio.com'
     version = 'V.01'
     easterEgg = 'Andrew Cyr-Marcoux'
-    colorUI = []
-    with open(os.path.join(os.path.dirname(__file__), "colors.dat"), 'r') as f:
-        for i in f:
-
-            x = float(i)
-
-
-            colorUI.append(x)
-
-        f.close()
-
 
     if cmds.window(winName, exists=True):
             cmds.deleteUI(winName)
@@ -78,7 +67,7 @@ def BuildUI():
     tmpRowWidth = winWidth
     cmds.rowLayout(nc = 1, cw1 = tmpRowWidth)
 
-    cmds.button('rename', l = 'Rename', w = winWidth, align='center', h = 30, bgc=colorUI, c='rename.do_rename()')
+    cmds.button('rename', l = 'Rename', w = winWidth, align='center', h = 30, c='rename.do_rename()')
 
     cmds.setParent('..')
 
@@ -107,7 +96,7 @@ def BuildUI():
     tmpRowWidth = winWidth
     cmds.rowLayout(nc = 1, cw1 = tmpRowWidth)
 
-    cmds.button('replace', l = 'Replace', w = winWidth, h = 30, bgc=colorUI, c='rename.do_replace()')
+    cmds.button('replace', l = 'Replace', w = winWidth, h = 30, c='rename.do_replace()')
 
     cmds.setParent('..')
 
@@ -124,7 +113,7 @@ def BuildUI():
     cmds.rowLayout(nc = 2, cw2 = tmpRowWidth)
 
     cmds.textField('prefix', w = tmpRowWidth[0])
-    cmds.button('prefix', l = 'Prefix', align='center', w = tmpRowWidth[1], h = 30, bgc=colorUI, c='rename.do_addPrefix()')
+    cmds.button('prefix', l = 'Prefix', align='center', w = tmpRowWidth[1], h = 30, c='rename.do_addPrefix()')
 
     cmds.setParent('..')
 
@@ -134,7 +123,7 @@ def BuildUI():
     cmds.rowLayout(nc = 2, cw2 = tmpRowWidth)
 
     cmds.textField('suffix', w = tmpRowWidth[0])
-    cmds.button('suffix', l = 'Suffix', align='center', w = tmpRowWidth[1], h = 30, bgc=colorUI, c='rename.do_addSuffix()')
+    cmds.button('suffix', l = 'Suffix', align='center', w = tmpRowWidth[1], h = 30, c='rename.do_addSuffix()')
 
     cmds.setParent('..')
 
@@ -217,28 +206,3 @@ def do_addSuffix():
 
         else:
             LOG.error('No suffix added.')
-
-
-def do_colorUI():
-
-    newColor = cmds.colorSliderGrp('newColor', q=True, rgbValue = True)
-
-    with open(os.path.join(os.path.dirname(__file__), "colors.dat"), 'w') as f:
-
-        for i in newColor:
-            f.write(str(i) + '\n')
-        f.close()
-    colorUI = []
-    with open(os.path.join(os.path.dirname(__file__), "colors.dat"), 'r') as f:
-        for i in f:
-
-            x = float(i)
-
-
-            colorUI.append(x)
-
-        f.close()
-        cmds.button('suffix', e = True, bgc=colorUI)
-        cmds.button('prefix', e = True, bgc=colorUI)
-        cmds.button('rename', e = True, bgc=colorUI)
-        cmds.button('replace', e = True, bgc=colorUI)

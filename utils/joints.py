@@ -20,17 +20,6 @@ def BuildUI():
     dev = 'William Bélanger'
     mail = 'william@unstandardstudio.com'
     version = 'V.01'
-    colorUI = []
-    with open(os.path.join(os.path.dirname(__file__), "colors.dat"), 'r') as f:
-        for i in f:
-
-            x = float(i)
-
-
-            colorUI.append(x)
-
-        f.close()
-
 
     if cmds.window(winName, exists=True):
             cmds.deleteUI(winName)
@@ -62,7 +51,7 @@ def BuildUI():
     cmds.rowLayout(nc = 2, cw2 = tmpRowWidth)
 
     cmds.text(l = 'Search for :', align = 'center', w = tmpRowWidth[0], h = 20)
-    cmds.textField('jointS', w = tmpRowWidth[1])
+    cmds.textField('oldName', w = tmpRowWidth[1])
 
     cmds.setParent('..')
 
@@ -72,14 +61,14 @@ def BuildUI():
     cmds.rowLayout(nc = 2, cw2 = tmpRowWidth)
 
     cmds.text(l = 'Replace with :', align = 'center', w = tmpRowWidth[0], h = 30)
-    cmds.textField('jointR', w = tmpRowWidth[1])
+    cmds.textField('newName', w = tmpRowWidth[1])
 
     cmds.setParent('..')
 
     tmpRowWidth = [winWidth]
     cmds.rowLayout(nc = 1, cw1 = tmpRowWidth[0])
 
-    cmds.button('mirrorJoint', l = 'Mirror joints', w = tmpRowWidth[0], h = 30, bgc=colorUI, c='mirrorJ()')
+    cmds.button('mirrorJoint', l = 'Mirror joints', w = tmpRowWidth[0], h = 30, c='joints.do_mirrorJoints()')
 
     cmds.setParent('..')
 
@@ -99,36 +88,31 @@ def do_mirrorJoints():
     newName = cmds.textField('newName', q=True, tx = True)
 
     sel = cmds.ls(sl=True)
+    if len(sel) < 2:
+        if oldName or newName != '':
+            if cmds.nodeType(sel) == 'joint':
 
-    if cmds.nodeType(sel) == 'joint':
+                if mAxis == 1:
+                    cmds.mirrorJoint(mxy = True, sr = (oldName, newName), mb = True)
+                if mAxis == 2:
+                    cmds.mirrorJoint(myz = True, sr = (oldName, newName), mb = True)
+                if mAxis == 3:
+                    cmds.mirrorJoint(mxz = True, sr = (oldName, newName), mb = True)
 
-        if mAxis == 1:
-            cmds.mirrorJoint(mxy = True, sr = (oldName, newName), mb = True)
-        if mAxis == 2:
-            cmds.mirrorJoint(myz = True, sr = (oldName, newName), mb = True)
-        if mAxis == 3:
-            cmds.mirrorJoint(mxz = True, sr = (oldName, newName), mb = True)
+            else:
+                LOG.error('No joints selected.')
 
+        else:
+            if cmds.nodeType(sel) == 'joint':
+
+                if mAxis == 1:
+                    cmds.mirrorJoint(mxy = True, mb = True)
+                if mAxis == 2:
+                    cmds.mirrorJoint(myz = True, mb = True)
+                if mAxis == 3:
+                    cmds.mirrorJoint(mxz = True, mb = True)
+
+            else:
+                LOG.error('No joints selected.')
     else:
-        LOG.error('No joints selected.')
-
-def do_colorUI():
-
-    newColor = cmds.colorSliderGrp('newColor', q=True, rgbValue = True)
-
-    with open(os.path.join(os.path.dirname(__file__), "colors.dat"), 'w') as f:
-
-        for i in newColor:
-            f.write(str(i) + '\n')
-        f.close()
-    colorUI = []
-    with open(os.path.join(os.path.dirname(__file__), "colors.dat"), 'r') as f:
-        for i in f:
-
-            x = float(i)
-
-
-            colorUI.append(x)
-
-        f.close()
-        cmds.button('mirrorJoint', e = True, bgc=colorUI)
+        LOG.error('Too many joints selected.')
