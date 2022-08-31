@@ -45,8 +45,7 @@ class _ui():
 
 
     def build(self):
-        """This method should be overwritten in derived classes to actually build the shelf
-        elements. Otherwise, nothing is added to the shelf."""
+
         pass
 
 
