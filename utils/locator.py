@@ -59,6 +59,35 @@ def loc_atSelectedPosRot():
         LOG.info('Created {} and snapped to {}'.format(loc[0], item))
     cmds.select(created_locs)
 
+
+
+def loc_atSelectedCenter():
+    sel = cmds.ls(sl=True, fl=True)
+
+    if sel:
+        ctr_pos = [0.0,0.0,0.0]
+
+        for i in sel:
+
+            sel_pos = cmds.xform(i, q=True, ws=True, t=True)
+
+            ctr_pos[0] = ctr_pos[0] + sel_pos[0]
+            ctr_pos[1] = ctr_pos[1] + sel_pos[1]
+            ctr_pos[2] = ctr_pos[2] + sel_pos[2]
+
+        ctr_pos[0] = ctr_pos[0] / len(sel)
+        ctr_pos[1] = ctr_pos[1] / len(sel)
+        ctr_pos[2] = ctr_pos[2] / len(sel)
+
+        loc = cmds.spaceLocator()[0]
+        cmds.setAttr('{}.translate'.format(loc), *ctr_pos)
+    else:
+        LOG.error('Nothing selected.')
+
+
+
+
+
 def snap_object():
     """Snaps first selected objects to last selected object"""
     selection = cmds.ls(selection=True)

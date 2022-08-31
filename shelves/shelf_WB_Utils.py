@@ -82,13 +82,16 @@ class load(shelf_base._shelf):
 
     def build(self):
 
-        # Reload shelf button
-        self.addButton(label="", ann='Reload shelf', icon=ICON_DIR + "/reloadShelf.png", command= "from WB_Utils.shelves import shelf_WB_Utils; ")
-
 
         # Settings
-        self.addButton(label="", ann='General tools.', icon=ICON_DIR + "/rename.png")
+        self.addButton(label="", ann='Settings.', icon=ICON_DIR + "/reloadShelf.png")
+        settings_menu = cmds.popupMenu(b=1)
 
+        self.addMenuItemDivider(settings_menu, divider=True, dividerLabel='CREATE LOCATORS...')
+
+        self.addMenuItem(settings_menu, 'Reload shelf', command= 'from WB_Utils.shelves import shelf_WB_Utils;'
+                                                                            'reload(shelf_WB_Utils);'
+                                                                            'shelf_WB_Utils.reload_shelf()')
         # Common tools
 
         # Separator
@@ -131,6 +134,9 @@ class load(shelf_base._shelf):
                                                                             'reload(locator);'
                                                                             'locator.loc_atSelectedPosRot()')
 
+        self.addMenuItem(locator_tool_menu, 'Creates locator at center of selection', command= 'from WB_Utils.utils import locator;'
+                                                                            'reload(locator);'
+                                                                            'locator.loc_atSelectedCenter()')
         # Mirror joints button
         self.addButton(label="", ann='Opens popup window to mirror joints.', icon=ICON_DIR + "/mirrorJoints.png", command= 'from WB_Utils.utils import joints;'
                                                                             'reload(joints);'
