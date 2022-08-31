@@ -77,3 +77,29 @@ def BuildUI():
 
 
 def do_mirrorControls():
+
+    sel = cmds.ls(sl=True, fl=True)
+
+
+    if sel:
+        for i in dup:
+            dup = cmds.duplicate(sel, rc=False, name = i.replace(oldName, newName))
+
+from maya import cmds
+
+sel = cmds.ls(sl=True, fl=True)
+
+
+
+
+if sel:
+    for i in sel:
+        dup = cmds.duplicate(i, rc=False, name = i.replace('OLD', 'NEW'))
+        for i in dup:
+            cmds.select(clear=True)
+            invGrp = cmds.group(em = True, w=True)
+            cmds.parent(dup, invGrp)
+            cmds.setAttr('{}.scaleX'.format(invGrp), -1)
+            cmds.parent(dup, w=True)
+            cmds.delete(invGrp)
+        
