@@ -151,7 +151,7 @@ def do_rename():
                 newName = 'Face_De_Cul'
 
 
-            cmds.rename(i, newName + '_' + str(startNum).rjust(padding,'0'))
+            cmds.rename(i, newName + str(startNum).rjust(padding,'0'))
             startNum = startNum + 1
 
 
@@ -183,12 +183,12 @@ def do_addPrefix():
 
     prefix = cmds.textField('prefix', q=True, tx=True)
 
-    sel = cmds.ls(sl=True)
+    sel = pm.selected()
 
     for i in sel:
 
         if prefix:
-            cmds.rename(i + prefix)
+            i.rename(prefix + i)
 
         else:
             LOG.error('No prefix added.')
@@ -197,12 +197,12 @@ def do_addSuffix():
 
     suffix = cmds.textField('suffix', q=True, tx=True)
 
-    sel = cmds.ls(sl=True)
+    sel = pm.selected()
 
     for i in sel:
 
         if suffix:
-            cmds.rename(suffix + i)
+            i.rename(i + suffix)
 
         else:
             LOG.error('No suffix added.')
