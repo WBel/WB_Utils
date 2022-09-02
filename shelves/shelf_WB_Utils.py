@@ -41,6 +41,9 @@ reload(joints)
 from WB_Utils.utils import settings
 reload(settings)
 
+from WB_Utils.utils import controls
+reload(controls)
+
 # Import maya modules
 from maya import cmds
 
@@ -119,6 +122,13 @@ class load(shelf_base._shelf):
         self.addButton(label="", ann='Add transform offset and group to selected objects.', icon=ICON_DIR + "/grpOffset.png", command= 'from WB_Utils.utils import transforms;'
                                                                             'reload(transforms);'
                                                                             'transforms.add_transform()')
+
+        # Mirror Controls
+        self.addButton(label="", ann='Mirror controls.', icon=ICON_DIR + "/grpOffset.png", command= 'from WB_Utils.utils import controls;'
+                                                                            'reload(controls);'
+                                                                            'controls.BuildUI()')
+
+
 
         # Locator button
         self.addButton(label="", ann='Create locators based on selection.', icon=ICON_DIR + "/locator.png")

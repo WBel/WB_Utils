@@ -9,7 +9,7 @@ LOG.setLevel(logging.INFO)
 
 
 def BuildUI():
-    winName = 'MirrorJoints'
+    winName = 'mirrorControls'
     winWidth = 400
     winHeight = 130
     dev = 'William Bélanger'
@@ -18,7 +18,7 @@ def BuildUI():
 
     if cmds.window(winName, exists=True):
             cmds.deleteUI(winName)
-    window = cmds.window(winName, w = winWidth, h = winHeight, title = 'Mirror joints', menuBar = True, rtf=True, s=False)
+    window = cmds.window(winName, w = winWidth, h = winHeight, title = 'Mirror controls', menuBar = True, rtf=True, s=False)
     cmds.columnLayout()
 
 #Infos________
@@ -78,28 +78,27 @@ def BuildUI():
 
 def do_mirrorControls():
 
+    mAxis = cmds.radioButtonGrp('mAxis', q=True, sl = True)
+    if mAxis == 1:
+        mAxis = 'Z'
+    if mAxis == 2:
+        mAxis = 'X'
+    if mAxis == 3:
+        mAxis = 'Y'
+    oldName = cmds.textField('oldName', q=True, tx = True)
+    newName = cmds.textField('newName', q=True, tx = True)
+
     sel = cmds.ls(sl=True, fl=True)
 
-
     if sel:
-        for i in dup:
+        for i in sel:
             dup = cmds.duplicate(sel, rc=False, name = i.replace(oldName, newName))
-
-from maya import cmds
-
-sel = cmds.ls(sl=True, fl=True)
-
-
-
-
-if sel:
-    for i in sel:
-        dup = cmds.duplicate(i, rc=False, name = i.replace('OLD', 'NEW'))
-        for i in dup:
             cmds.select(clear=True)
             invGrp = cmds.group(em = True, w=True)
-            cmds.parent(dup, invGrp)
-            cmds.setAttr('{}.scaleX'.format(invGrp), -1)
-            cmds.parent(dup, w=True)
+            cmds.parent(i, invGrp)
+            cmds.setAttr('{}.scale{}'.format(invGrp, mAxis), -1)
+            cmds.parent(i, w=True)
             cmds.delete(invGrp)
-        
+
+    else:
+        LOG.error('Nothing selected.')
