@@ -38,8 +38,6 @@ reload(locator)
 from WB_Utils.utils import joints
 reload(joints)
 
-from WB_Utils.utils import settings
-reload(settings)
 
 from WB_Utils.utils import controls
 reload(controls)
@@ -87,7 +85,7 @@ class load(shelf_base._shelf):
 
 
         # Settings
-        self.addButton(label="", ann='Settings.', icon=ICON_DIR + "/reloadShelf.png")
+        self.addButton(label="", ann='Settings.', icon=ICON_DIR + "/settings.png")
         settings_menu = cmds.popupMenu(b=1)
 
         self.addMenuItemDivider(settings_menu, divider=True, dividerLabel='CREATE LOCATORS...')
@@ -123,12 +121,6 @@ class load(shelf_base._shelf):
                                                                             'reload(transforms);'
                                                                             'transforms.add_transform()')
 
-        # Mirror Controls
-        self.addButton(label="", ann='Mirror controls.', icon=ICON_DIR + "/grpOffset.png", command= 'from WB_Utils.utils import controls;'
-                                                                            'reload(controls);'
-                                                                            'controls.BuildUI()')
-
-
 
         # Locator button
         self.addButton(label="", ann='Create locators based on selection.', icon=ICON_DIR + "/locator.png")
@@ -151,3 +143,8 @@ class load(shelf_base._shelf):
         self.addButton(label="", ann='Opens popup window to mirror joints.', icon=ICON_DIR + "/mirrorJoints.png", command= 'from WB_Utils.utils import joints;'
                                                                             'reload(joints);'
                                                                             'joints.BuildUI()')
+
+        # Mirror Controls
+        self.addButton(label="", ann='Mirror controls.', icon=ICON_DIR + "/mirrorCtl.png", command= 'from WB_Utils.utils import controls;'
+                                                                            'reload(controls);'
+                                                                            'controls.BuildUI()')

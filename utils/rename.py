@@ -18,7 +18,7 @@ def BuildUI():
     winWidth = 400
     dev = 'William Bélanger'
     mail = 'william@unstandardstudio.com'
-    version = 'V.01'
+    version = 'V.1.0'
     easterEgg = 'Andrew Cyr-Marcoux'
 
     if cmds.window(winName, exists=True):
@@ -35,8 +35,6 @@ def BuildUI():
     cmds.menuItem(l = mail)
     cmds.menuItem(l = 'Version', d = True, ld = True)
     cmds.menuItem(l = version)
-    cmds.menuItem(l = 'Boss', d = True, ld = True)
-    cmds.menuItem(l = easterEgg)
 
 
 #RENAME__________________________________________________________________________________

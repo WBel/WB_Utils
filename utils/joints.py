@@ -19,7 +19,7 @@ def BuildUI():
     winHeight = 130
     dev = 'William Bélanger'
     mail = 'william@unstandardstudio.com'
-    version = 'V.01'
+    version = 'V.1.0'
 
     if cmds.window(winName, exists=True):
             cmds.deleteUI(winName)
