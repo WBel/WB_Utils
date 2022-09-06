@@ -53,6 +53,7 @@ Custom Maya tool shelf for quick access to often used utility functions and tool
 Add these lines to your `<USER>/Documents/maya/scripts/userSetup.py` file
 
     import maya.utils
+    from importlib import reload
 
     # Load Mech Rig Custom Shelf at Maya startup
     from WB_Utils.shelves import shelf_WB_Utils
