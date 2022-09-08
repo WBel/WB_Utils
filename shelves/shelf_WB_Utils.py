@@ -115,6 +115,22 @@ class load(shelf_base._shelf):
         # Separator
         self.addSeparator()
 
+        # Attributes Button
+        self.addButton(label="", ann='Attributes modifier tool.', icon=ICON_DIR + "/attr.png")
+        locator_tool_menu = cmds.popupMenu(b=1)
+
+        self.addMenuItem(locator_tool_menu, 'Creates visibility switch (Select rig top node).', command= 'from WB_Utils.utils import attributes;'
+                                                                            'reload(attributes);'
+                                                                            'attributes.do_createCategoryUi()')
+
+        self.addMenuItem(locator_tool_menu, 'Lock all attributes channels on selected.', command= 'from WB_Utils.utils import attributes;'
+                                                                            'reload(attributes);'
+                                                                            'attributes.do_LockUnlockAttr(lock = True)')
+
+        self.addMenuItem(locator_tool_menu, 'Unlock all attributes channels on selected.', command= 'from WB_Utils.utils import attributes;'
+                                                                            'reload(attributes);'
+                                                                            'attributes.do_LockUnlockAttr(lock = False)')
+
 
         # Group Offset button
         self.addButton(label="", ann='Add transform offset and group to selected objects.', icon=ICON_DIR + "/grpOffset.png", command= 'from WB_Utils.utils import transforms;'
