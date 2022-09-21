@@ -44,6 +44,8 @@ You can test if your installation was successful by running the code below to cr
 ## Custom Shelf
 Custom Maya tool shelf for quick access to often used utility functions and tools.
 #### To Load Custom Maya Tool shelf
+    from importlib import reload
+
     from WB_Utils.shelves import shelf_WB_Utils
     reload(shelf_WB_Utils)
     shelf_WB_Utils.load(name="WB_Utils")
