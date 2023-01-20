@@ -1,5 +1,6 @@
 from maya import cmds
 
+import pymel.core as pm
 import logging
 
 
@@ -93,11 +94,16 @@ def do_mirrorControls():
     if sel:
         for i in sel:
             dup = cmds.duplicate(sel, rc=False, name = i.replace(oldName, newName))
+            cmds.select(dup[0], hi=True)
+
+            for object in pm.selected():
+                object.rename(object.name().replace(oldName, newName))
+
             cmds.select(clear=True)
             invGrp = cmds.group(em = True, w=True)
-            cmds.parent(i, invGrp)
+            cmds.parent(dup[0], invGrp)
             cmds.setAttr('{}.scale{}'.format(invGrp, mAxis), -1)
-            cmds.parent(i, w=True)
+            cmds.parent(dup[0], w=True)
             cmds.delete(invGrp)
 
     else:
