@@ -74,7 +74,7 @@ def do_createCategory(top_node, category_name):
             cmds.setAttr('{}.drawOverride.overrideDisplayType'.format(category_name), lock=True)
 
             # Set display to "on" by default and lock/hide all other attrs
-            for attr in ['tx', 'ty', 'tz', 'rx', 'ry', 'rz', 'sx', 'sy', 'sz', 'v']:
+            for attr in ['tx', 'ty', 'tz', 'rx', 'ry', 'rz', 'sx', 'sy', 'sz', 'v']: 
                 cmds.setAttr('{}.{}'.format(category_name, attr), lock=True, keyable=False)
             cmds.setAttr('{}.{}'.format(top_node, category_name), 1)
 
