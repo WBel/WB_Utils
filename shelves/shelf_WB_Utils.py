@@ -109,6 +109,10 @@ class load(shelf_base._shelf):
                                                                             'reload(rename);'
                                                                             'rename.BuildUI()')
 
+        # Colouring Tool
+        self.addButton(label="", ann='Opens popup window to color objects.', icon=ICON_DIR + "/rename.png", command= 'from WB_Utils.utils import colorChange;'
+                                                                            'reload(colorChange);'
+                                                                            'rename.doColorChange()')
 
         # Rigging Tools
 
