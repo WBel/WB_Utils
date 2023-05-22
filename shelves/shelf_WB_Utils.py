@@ -85,7 +85,7 @@ class load(shelf_base._shelf):
 
 
         # Settings
-        self.addButton(label="", ann='Settings.', icon=ICON_DIR + "/settings.png")
+        self.addButton(label="", ann='Settings', icon=ICON_DIR + "/settings.png")
         settings_menu = cmds.popupMenu(b=1)
 
         self.addMenuItemDivider(settings_menu, divider=True, dividerLabel='CREATE LOCATORS...')
@@ -105,12 +105,12 @@ class load(shelf_base._shelf):
 
 
         # Renaming tool
-        self.addButton(label="", ann='Opens popup window to rename objects.', icon=ICON_DIR + "/rename.png", command= 'from WB_Utils.utils import rename;'
+        self.addButton(label="", ann='Opens popup window to rename objects', icon=ICON_DIR + "/rename.png", command= 'from WB_Utils.utils import rename;'
                                                                             'reload(rename);'
                                                                             'rename.BuildUI()')
 
         # Colouring Tool
-        self.addButton(label="", ann='Opens popup window to color objects.', icon=ICON_DIR + "/rename.png", command= 'from WB_Utils.utils import colorChange;'
+        self.addButton(label="", ann='Opens popup window to color objects', icon=ICON_DIR + "/rename.png", command= 'from WB_Utils.utils import colorChange;'
                                                                             'reload(colorChange);'
                                                                             'colorChange.BuildUI()')
 
@@ -120,30 +120,30 @@ class load(shelf_base._shelf):
         self.addSeparator()
 
         # Attributes Button
-        self.addButton(label="", ann='Attributes modifier tool.', icon=ICON_DIR + "/attr.png")
+        self.addButton(label="", ann='Attributes modifier tool', icon=ICON_DIR + "/attr.png")
         locator_tool_menu = cmds.popupMenu(b=1)
 
-        self.addMenuItem(locator_tool_menu, 'Creates visibility switch (Select rig top node).', command= 'from WB_Utils.utils import attributes;'
+        self.addMenuItem(locator_tool_menu, 'Creates visibility switch (Select rig top node)', command= 'from WB_Utils.utils import attributes;'
                                                                             'reload(attributes);'
                                                                             'attributes.do_createCategoryUi()')
 
-        self.addMenuItem(locator_tool_menu, 'Lock all attributes channels on selected.', command= 'from WB_Utils.utils import attributes;'
+        self.addMenuItem(locator_tool_menu, 'Lock all attributes channels on selected', command= 'from WB_Utils.utils import attributes;'
                                                                             'reload(attributes);'
                                                                             'attributes.do_LockUnlockAttr(lock = True)')
 
-        self.addMenuItem(locator_tool_menu, 'Unlock all attributes channels on selected.', command= 'from WB_Utils.utils import attributes;'
+        self.addMenuItem(locator_tool_menu, 'Unlock all attributes channels on selected', command= 'from WB_Utils.utils import attributes;'
                                                                             'reload(attributes);'
                                                                             'attributes.do_LockUnlockAttr(lock = False)')
 
 
         # Group Offset button
-        self.addButton(label="", ann='Add transform offset and group to selected objects.', icon=ICON_DIR + "/grpOffset.png", command= 'from WB_Utils.utils import transforms;'
+        self.addButton(label="", ann='Add transform offset and group to selected objects', icon=ICON_DIR + "/grpOffset.png", command= 'from WB_Utils.utils import transforms;'
                                                                             'reload(transforms);'
                                                                             'transforms.add_transform()')
 
 
         # Locator button
-        self.addButton(label="", ann='Create locators based on selection.', icon=ICON_DIR + "/locator.png")
+        self.addButton(label="", ann='Create locators based on selection', icon=ICON_DIR + "/locator.png")
         locator_tool_menu = cmds.popupMenu(b=1)
 
         self.addMenuItemDivider(locator_tool_menu, divider=True, dividerLabel='CREATE LOCATORS...')
@@ -160,11 +160,22 @@ class load(shelf_base._shelf):
                                                                             'reload(locator);'
                                                                             'locator.loc_atSelectedCenter()')
         # Mirror joints button
-        self.addButton(label="", ann='Opens popup window to mirror joints.', icon=ICON_DIR + "/mirrorJoints.png", command= 'from WB_Utils.utils import joints;'
+        self.addButton(label="", ann='Opens popup window to mirror joints', icon=ICON_DIR + "/mirrorJoints.png", command= 'from WB_Utils.utils import joints;'
                                                                             'reload(joints);'
                                                                             'joints.BuildUI()')
 
         # Mirror Controls
-        self.addButton(label="", ann='Mirror controls.', icon=ICON_DIR + "/mirrorCtl.png", command= 'from WB_Utils.utils import controls;'
+        self.addButton(label="", ann='Mirror controls', icon=ICON_DIR + "/mirrorCtl.png", command= 'from WB_Utils.utils import controls;'
                                                                             'reload(controls);'
                                                                             'controls.BuildUI()')
+
+
+        # Vray tools
+
+        # Separator
+        self.addSeparator()
+
+        # Vray object settings
+        self.addButton(label="", ann='Vray object settings', icon=ICON_DIR + "/vray.png", command= 'from WB_Utils.utils import vrayUtils;'
+                                                                            'reload(vrayUtils);'
+                                                                            'vrayUtils.BuildUI()')
