@@ -64,14 +64,8 @@ def explore_maya_project():
 def reload_shelf():
     """Reloads shelf"""
     try:
-        from WB_Utils.shelves import shelf_base
-        reload(shelf_base)
 
-        from WB_Utils.shelves import shelf_WB_Utils
-        reload(shelf_WB_Utils)
-
-
-        shelf_WB_Utils.load('WB_Utils')
+        cmds.evalDeferred('shelf_WB_Utils.load(name="WB_Utils")')
 
         LOG.info("Successfully reloaded {} shelf".format('WB_Utils'))
         return True
@@ -94,6 +88,17 @@ def reload_studioShelf():
         if licenceName == 'Unstandard':
 
             try:
+
+                cmds.evalDeferred('shelf_WB_Utils.load(name="WB_Utils", version = "Unstandard")')
+
+                LOG.info("Successfully reloaded {} shelf".format('WB_Utils'))
+                return True
+            except:
+                LOG.error("Error reloading shelf")
+                return
+        else:
+            LOG.error("Non valid licence number, reloading default shelf.")
+            try:
                 from WB_Utils.shelves import shelf_base
                 reload(shelf_base)
 
@@ -108,11 +113,6 @@ def reload_studioShelf():
             except:
                 LOG.error("Error reloading shelf")
                 return
-        else:
-            LOG.error("Non valid licence number, reloading default shelf.")
-            from WB_Utils.shelves import shelf_WB_Utils
-            reload(shelf_WB_Utils)
-            shelf_WB_Utils.reload_shelf()
 
 class load(shelf_base._shelf):
 
