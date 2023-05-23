@@ -54,6 +54,21 @@ def BuildUI():
     cmds.button('selSubd', l = 'Select Objects with Subdivision', w = winWidth, align='center', h = 30, c='vrayUtils.do_selObjectSubd()')
     cmds.setParent('..')
 
+#SubdivisionSettings_____________________________________________________________________________
+
+
+    cmds.frameLayout(l = 'Subdivision Settings', w = winWidth, cll = True, cl = True)
+
+    tmpRowWidth = [winWidth*0.5, winWidth*0.5]
+    cmds.rowLayout(nc = 2, cw2 = tmpRowWidth)
+
+    cmds.textField('prefix', w = tmpRowWidth[0])
+    cmds.button('prefix', l = 'Prefix', align='center', w = tmpRowWidth[1], h = 30, c='prefButton()')
+
+    cmds.setParent('..')
+
+    cmds.setParent('..')
+
 #ObjectID__________________________________________________________________________________
 
     cmds.frameLayout(l = 'Object ID', w = winWidth)
@@ -84,17 +99,13 @@ def BuildUI():
 
     cmds.showWindow()
 
-
-
-
-
 def do_changeObjectID(state=""):
 
     objectID = cmds.intSliderGrp("ID", q=True, v = True)
 
 
     selMesh = cmds.ls(sl = True)
-    selShape = cmds.listRelatives(s = True, f= True, type = "mesh")
+    selShape = cmds.listRelatives(s = True, f= True, type = ['mesh', 'xgmSubdPatch'])
 
 
     for i in selShape:
@@ -113,7 +124,7 @@ def do_selObjectID():
 
 
     sel = cmds.select(all = True)
-    selGood = cmds.ls( type="mesh" )
+    selGood = cmds.ls( type = ['mesh', 'xgmSubdPatch'] )
     cmds.select(cl = True)
 
     for i in selGood:
@@ -122,7 +133,12 @@ def do_selObjectID():
         if "vrayObjectID" in objectAttr:
             currentID = cmds.getAttr(i+".vrayObjectID")
             if currentID == objectID:
-                cmds.select(i, add = True)
+
+                iRel = cmds.listRelatives(i, p = True)
+                for i in iRel:
+
+                    cmds.select(i, add = True)
+
 
 def do_subdivideObject(state=""):
 
