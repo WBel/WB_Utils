@@ -14,10 +14,12 @@ class _shelf():
     By default it creates an empty shelf called "customShelf"."""
 
 
-    def __init__(self, name="customShelf", iconPath=""):
+    def __init__(self, name="customShelf", iconPath="", version=""):
         self.name = name
 
         self.iconPath = iconPath
+
+        self.version = version
 
         self.labelBackground = (0,0,0,0)
         self.labelColour = (.9, .9, .9)

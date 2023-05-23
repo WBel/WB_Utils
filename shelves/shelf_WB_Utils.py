@@ -79,6 +79,41 @@ def reload_shelf():
         LOG.error("Error reloading shelf")
         return
 
+def reload_studioShelf():
+    """Reloads shelf"""
+    result = cmds.promptDialog(
+        title='Version',
+        message='Enter Licence:',
+        button=['OK', 'Cancel'],
+        defaultButton='OK',
+        cancelButton='Cancel',
+        dismissString='Cancel')
+
+    if result == 'OK':
+        licenceName = cmds.promptDialog(query=True, text=True)
+        if licenceName == 'Unstandard':
+
+            try:
+                from WB_Utils.shelves import shelf_base
+                reload(shelf_base)
+
+                from WB_Utils.shelves import shelf_WB_Utils
+                reload(shelf_WB_Utils)
+
+
+                shelf_WB_Utils.load('WB_Utils', version = licenceName)
+
+                LOG.info("Successfully reloaded {} shelf".format('WB_Utils'))
+                return True
+            except:
+                LOG.error("Error reloading shelf")
+                return
+        else:
+            LOG.error("Non valid licence number, reloading default shelf.")
+            from WB_Utils.shelves import shelf_WB_Utils
+            reload(shelf_WB_Utils)
+            shelf_WB_Utils.reload_shelf()
+
 class load(shelf_base._shelf):
 
     def build(self):
@@ -93,6 +128,10 @@ class load(shelf_base._shelf):
         self.addMenuItem(settings_menu, 'Reload shelf', command= 'from WB_Utils.shelves import shelf_WB_Utils;'
                                                                             'reload(shelf_WB_Utils);'
                                                                             'shelf_WB_Utils.reload_shelf()')
+
+        self.addMenuItem(settings_menu, 'Reload Studio Shelf...', command= 'from WB_Utils.shelves import shelf_WB_Utils;'
+                                                                            'reload(shelf_WB_Utils);'
+                                                                            'shelf_WB_Utils.reload_studioShelf()')
         # Common tools
 
         # Separator
@@ -173,9 +212,11 @@ class load(shelf_base._shelf):
         # Vray tools
 
         # Separator
-        self.addSeparator()
+        if self.version == 'Unstandard':
+
+            self.addSeparator()
 
         # Vray object settings
-        self.addButton(label="", ann='Vray object settings', icon=ICON_DIR + "/vray.png", command= 'from WB_Utils.utils import vrayUtils;'
+            self.addButton(label="", ann='Vray object settings', icon=ICON_DIR + "/vray.png", command= 'from WB_Utils.utils import vrayUtils;'
                                                                             'reload(vrayUtils);'
                                                                             'vrayUtils.BuildUI()')
