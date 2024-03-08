@@ -59,6 +59,36 @@ def BuildUI():
 
     cmds.frameLayout(l = 'Subdivision Settings', w = winWidth, cll = True, cl = True)
 
+
+#EdgeLength_____
+
+    tmpRowWidth = [winWidth*0.2, winWidth*0.6, winWidth*0.2]
+    cmds.rowLayout(nc = 3, cw3 = tmpRowWidth)
+
+    cmds.text(l = "Edge length", w = tmpRowWidth[0])
+    cmds.floatSliderGrp('edgLenFlt', field=True, w = tmpRowWidth[1], h = 30, v = 4, pre = 3)
+    cmds.button('edgLen', l = 'Apply', w = tmpRowWidth[2], align='center', h = 30, c='vrayUtils.do_subSettings(type = "edgLen")')
+
+    cmds.setParent('..')
+
+#MaxSubdivs_____
+
+    tmpRowWidth = [winWidth*0.2, winWidth*0.6, winWidth*0.2]
+    cmds.rowLayout(nc = 3, cw3 = tmpRowWidth)
+
+    cmds.text(l = "Max subdivs", w = tmpRowWidth[0])
+    cmds.intSliderGrp('maxSubInt', field=True, w = tmpRowWidth[1], h = 30, v = 4)
+    cmds.button('maxSub', l = 'Apply', w = tmpRowWidth[2], align='center', h = 30, c='vrayUtils.do_subSettings(type = "maxSub")')
+
+    cmds.setParent('..')
+
+    cmds.setParent('..')
+
+#DisplacementControl_____________________________________________________________________________
+
+
+    cmds.frameLayout(l = 'Displacement Control', w = winWidth, cll = True, cl = True)
+
     tmpRowWidth = [winWidth*0.5, winWidth*0.5]
     cmds.rowLayout(nc = 2, cw2 = tmpRowWidth)
 
@@ -68,6 +98,7 @@ def BuildUI():
     cmds.setParent('..')
 
     cmds.setParent('..')
+
 
 #ObjectID__________________________________________________________________________________
 
@@ -149,10 +180,14 @@ def do_subdivideObject(state=""):
         if state == "add":
 
             cmds.vray("addAttributesFromGroup", i, "vray_subdivision", 1)
+            cmds.vray("addAttributesFromGroup", i, "vray_subquality", 1)
+            cmds.vray("addAttributesFromGroup", i, "vray_displacement", 1)
 
         elif state == "remove":
 
             cmds.vray("addAttributesFromGroup", i, "vray_subdivision", 0)
+            cmds.vray("addAttributesFromGroup", i, "vray_subquality", 0)
+            cmds.vray("addAttributesFromGroup", i, "vray_displacement", 0)
 
 def do_selObjectSubd():
 
@@ -165,3 +200,17 @@ def do_selObjectSubd():
         print(objectAttr)
         if "vraySeparator_vray_subdivision" in objectAttr:
             cmds.select(i, add = True)
+
+def do_subSettings(type = ""):
+
+    selMesh = cmds.ls(sl = True)
+    selShape = cmds.listRelatives(s = True, f= True, type = "mesh")
+    edgeLength = cmds.floatSliderGrp('edgLenFlt', q = True, v = True)
+    maxSubdivs = cmds.intSliderGrp('maxSubInt', q = True, v = True)
+
+    for i in selShape:
+        if type == "edgLen":
+            cmds.setAttr(i +".vrayEdgeLength", edgeLength)
+
+        elif type == "maxSub":
+            cmds.setAttr(i +".vrayMaxSubdivs", maxSubdivs)
