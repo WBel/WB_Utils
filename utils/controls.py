@@ -93,7 +93,7 @@ def do_mirrorControls():
 
     if sel:
         for i in sel:
-            dup = cmds.duplicate(sel, rc=False, name = i.replace(oldName, newName))
+            dup = cmds.duplicate(i, rc=False, name = i.replace(oldName, newName))
             cmds.select(dup[0], hi=True)
 
             for object in pm.selected():

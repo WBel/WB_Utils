@@ -75,7 +75,7 @@ def BuildUI():
     cmds.rowLayout(nc = 2, cw2 = tmpRowWidth)
 
     cmds.text(l = 'Replace :', align = 'center', w = tmpRowWidth[0], h = 20)
-    cmds.textField('oldName', w = tmpRowWidth[1])
+    cmds.textField('oldNameR', w = tmpRowWidth[1])
 
     cmds.setParent('..')
 
@@ -85,7 +85,7 @@ def BuildUI():
     cmds.rowLayout(nc = 2, cw2 = tmpRowWidth)
 
     cmds.text(l = 'With :', align = 'center', w = tmpRowWidth[0], h = 30)
-    cmds.textField('newName', w = tmpRowWidth[1])
+    cmds.textField('newNameR', w = tmpRowWidth[1])
 
     cmds.setParent('..')
 
@@ -160,8 +160,8 @@ def do_rename():
 
 def do_replace():
 
-    oldName = cmds.textField('oldName', q=True, tx=True)
-    newName = cmds.textField('newName', q=True, tx=True)
+    oldNameR = cmds.textField('oldNameR', q=True, tx=True)
+    newNameR = cmds.textField('newNameR', q=True, tx=True)
 
 
     sel = pm.ls(sl=True)
@@ -170,8 +170,8 @@ def do_replace():
 
     for i in sel:
 
-        if oldName in i.nodeName():
-            i.rename(i.nodeName().replace(oldName, newName))
+        if oldNameR in i.nodeName():
+            i.rename(i.nodeName().replace(oldNameR, newNameR))
 
         else:
             LOG.info('Selected object does not contain replacement name.')
