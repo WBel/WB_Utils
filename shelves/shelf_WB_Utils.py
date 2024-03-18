@@ -153,6 +153,11 @@ class load(shelf_base._shelf):
                                                                             'reload(colorChange);'
                                                                             'colorChange.BuildUI()')
 
+        # Colouring Tool
+        self.addButton(label="", ann='Opens popup window to setup playblast', icon=ICON_DIR + "/rename.png", command= 'from WB_Utils.utils import playblast;'
+                                                                            'reload(playblast);'
+                                                                            'playblast.BuildUI()')
+
         # Rigging Tools
 
         # Separator
