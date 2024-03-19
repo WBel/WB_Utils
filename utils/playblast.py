@@ -62,18 +62,23 @@ def update_compression_options(*args):
 #ADD CAMERA________________________________________________________________________________
 
 def add_camera_entry(*args):
-    global camera_entries
     entry = {}
-    row_layout = cmds.rowLayout(numberOfColumns=4, adjustableColumn=True, parent=column_layout)
+    row_layout = cmds.rowLayout(numberOfColumns=5, adjustableColumn=2, parent=column_layout)
     entry['row_layout'] = row_layout
+
     camera_menu = cmds.optionMenu(parent=row_layout, label="Camera")
     for cam in cmds.listCameras(perspective=True):
         cmds.menuItem(label=cam, parent=camera_menu)
     entry['camera'] = camera_menu
-    entry['start_frame'] = cmds.intField(parent=row_layout, value=1)
-    entry['end_frame'] = cmds.intField(parent=row_layout, value=24)
+
+    entry['file_name'] = cmds.textField(parent=row_layout, placeholderText="Suffix", width=120)
+
+    entry['start_frame'] = cmds.intField(parent=row_layout, value=1, width=50)
+    entry['end_frame'] = cmds.intField(parent=row_layout, value=24, width=50)
+
     delete_btn = cmds.button(parent=row_layout, label="Supprimer")
     entry['delete_btn'] = delete_btn
+
     camera_entries.append(entry)
     update_delete_buttons()
 
@@ -98,13 +103,14 @@ def on_playblast_pressed(*args):
     encoding_format = cmds.optionMenu(encoding_menu, query=True, value=True)
     for entry in camera_entries:
         camera = cmds.optionMenu(entry['camera'], query=True, value=True)
+        file_suffix = cmds.textField(entry['file_name'], query=True, text=True)
         start_frame = cmds.intField(entry['start_frame'], query=True, value=True)
         end_frame = cmds.intField(entry['end_frame'], query=True, value=True)
-        create_playblast(camera, start_frame, end_frame, file_format, encoding_format, export_folder)
+        create_playblast(camera, start_frame, end_frame, file_format, encoding_format, export_folder, file_suffix)
 
 #PLAYBLAST_____________________________________
 
-def create_playblast(camera, start_frame, end_frame, format, encoding, export_folder):
+def create_playblast(camera, start_frame, end_frame, format, encoding, export_folder, file_suffix):
     render_width = cmds.getAttr("defaultResolution.width")
     render_height = cmds.getAttr("defaultResolution.height")
     playblast_settings = {
@@ -119,7 +125,7 @@ def create_playblast(camera, start_frame, end_frame, format, encoding, export_fo
         'compression': encoding,
         'quality': 100,
         'widthHeight': [render_width, render_height],
-        'filename': export_folder + "/Playblast_" + camera
+        'filename': export_folder + "/Playblast_" + camera + "_" + file_suffix + "_" + start_frame + "_" + end_frame
     }
     cmds.lookThru(camera)
     cmds.playbackOptions(min=start_frame, max=end_frame)
