@@ -125,7 +125,7 @@ def create_playblast(camera, start_frame, end_frame, format, encoding, export_fo
         'compression': encoding,
         'quality': 100,
         'widthHeight': [render_width, render_height],
-        'filename': export_folder + "/Playblast_" + camera + "_" + file_suffix + "_" + start_frame + "_" + end_frame
+        'filename': export_folder + "/Playblast_" + camera + "_" + file_suffix + "_" + str(start_frame) + "_" + str(end_frame)
     }
     cmds.lookThru(camera)
     cmds.playbackOptions(min=start_frame, max=end_frame)
